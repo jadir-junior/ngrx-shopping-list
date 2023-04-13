@@ -1,38 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { Ingredient } from '../models/ingredient.model';
+import { ShoppingListItem } from '../store/shopping-list.state';
+import { Store } from '@ngrx/store';
+import { loadShoppingList } from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
   template: `<ul>
-    <li
-      *ngFor="let ingredient of ingredients"
-      class="flex justify-between items-center mx-4 my-2 px-4 py-2"
-    >
-      <div class="flex">
-        <div class="h-24 w-24">
-          <img
-            *ngIf="ingredient.img.src"
-            [src]="ingredient.img.src"
-            [alt]="ingredient.img.alt"
-          />
-          <div
-            *ngIf="!ingredient.img.src"
-            class="h-24 w-24 bg-gray-200 rounded-xl"
-          ></div>
-        </div>
-        <div class="mt-4 ml-4">
-          <span>{{ ingredient.name }}</span>
-        </div>
-      </div>
-      <div
-        class="w-16 h-16 flex justify-center items-center rounded-3xl border border-gray-400"
-      >
-        <span class="font-bold">{{ ingredient.amount }}</span>
-      </div>
-    </li>
+    <app-shopping-item
+      *ngFor="let item of shoppingList"
+      [shoppingItem]="item"
+    ></app-shopping-item>
   </ul>`,
 })
-export class ShoppingListComponent {
-  @Input() ingredients?: Ingredient[];
+export class ShoppingListComponent implements OnInit {
+  @Input() shoppingList?: ShoppingListItem[];
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(loadShoppingList());
+  }
 }

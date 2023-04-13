@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Ingredient } from './shopping/models/ingredient.model';
+import { SHOPPING_LIST } from './shopping/data/data';
+import { ShoppingListItem } from './shopping/store/shopping-list.state';
 
 @Component({
   selector: 'app-root',
@@ -8,26 +9,9 @@ import { Ingredient } from './shopping/models/ingredient.model';
       Shopping list
     </header>
     <app-add-shopping></app-add-shopping>
-    <app-shopping-list [ingredients]="ingredients"></app-shopping-list>
+    <app-shopping-list [shoppingList]="shoppingList"></app-shopping-list>
   `,
 })
 export class AppComponent {
-  ingredients: Ingredient[] = [
-    {
-      name: 'Banana',
-      amount: 5,
-      img: {
-        src: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80',
-        alt: 'banana',
-      },
-    },
-    {
-      name: 'Strawberry',
-      amount: 2,
-      img: {
-        src: 'https://images.unsplash.com/photo-1576561601677-ac33c580a70b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80',
-        alt: 'strawberry',
-      },
-    },
-  ];
+  shoppingList: ShoppingListItem[] = SHOPPING_LIST;
 }
